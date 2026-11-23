@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【零基礎入門】走進粉彩夢幻國度！看懂三麗鷗角色宇宙與人氣哲學</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FFF7F9;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFF0F4;
+      --bg-card-hover: #FFE6EE;
+      --sanrio-pink: #FF6584;
+      --sanrio-pink-soft: #FFB3C6;
+      --sanrio-purple: #C084FC;
+      --sanrio-purple-soft: #E9D5FF;
+      --sanrio-blue: #38BDF8;
+      --sanrio-blue-soft: #BAE6FD;
+      --sanrio-yellow: #FBBF24;
+      --sanrio-yellow-soft: #FEF08A;
+      --text-dark: #37252A;
+      --text-sub: #7A5B64;
+      --text-muted: #9F7E88;
+      --border-kawaii: #FFD1DC;
+      --border-accent: #FF85A2;
+      --font-rounded: 'M PLUS Rounded 1c', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      font-family: var(--font-rounded);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 夢幻粉彩漂浮泡泡背景 */
+    .bubble-bg {
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 15% 15%, rgba(255, 182, 193, 0.45) 0%, transparent 35%),
+        radial-gradient(circle at 85% 20%, rgba(216, 180, 254, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 75% 85%, rgba(186, 230, 253, 0.45) 0%, transparent 45%),
+        radial-gradient(circle at 10% 80%, rgba(254, 240, 138, 0.45) 0%, transparent 35%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 頂部導航列 */
+    .pres-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--border-kawaii);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(255, 101, 132, 0.08);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ribbon-badge {
+      background: linear-gradient(135deg, var(--sanrio-pink), #FF85A2);
+      color: #fff;
+      font-size: 1.2rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(255, 101, 132, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--sanrio-pink);
+      font-weight: 700;
+      display: block;
+    }
+
+    .slide-counter {
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: #FFF5F7;
+      color: var(--text-sub);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border-kawaii);
+    }
+
+    .slide-counter span {
+      color: var(--sanrio-pink);
+      font-weight: 800;
+    }
+
+    /* 粉彩進度條 */
+    .progress-bar-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 209, 220, 0.4);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--sanrio-pink), var(--sanrio-purple), var(--sanrio-blue));
+      width: 14.28%;
+      transition: width 0.35s ease;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* 簡報主舞台 */
+    .pres-container {
+      flex: 1;
+      margin-top: 68px;
+      margin-bottom: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 10;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1120px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-kawaii);
+      border-radius: 28px;
+      padding: 3rem;
+      box-shadow: 0 16px 40px rgba(255, 120, 150, 0.12), inset 0 2px 0 #FFFFFF;
+      position: relative;
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* 裝飾性標籤 */
+    .category-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--sanrio-pink);
+      background: #FFE8EE;
+      border: 1.5px solid #FFC2D1;
+      padding: 5px 14px;
+      border-radius: 16px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 2rem;
+      color: var(--text-dark);
+    }
+
+    .slide-title .highlight {
+      color: var(--sanrio-pink);
+      position: relative;
+    }
+
+    .slide-title .accent-purple {
+      color: var(--sanrio-purple);
+    }
+
+    /* 講義卡片網格 */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .handout-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-kawaii);
+      border-radius: 20px;
+      padding: 1.6rem;
+      transition: all 0.25s ease;
+      position: relative;
+      box-shadow: 0 6px 18px rgba(255, 150, 175, 0.08);
+    }
+
+    .handout-card:hover {
+      transform: translateY(-3px);
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+      box-shadow: 0 10px 24px rgba(255, 101, 132, 0.16);
+    }
+
+    .card-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--sanrio-purple);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-heading {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-body {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: var(--text-sub);
+    }
+
+    .card-body strong {
+      color: var(--text-dark);
+    }
+
+    .card-body ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0.6rem;
+    }
+
+    .card-body li {
+      position: relative;
+      padding-left: 1.35rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .card-body li::before {
+      content: "🌸";
+      position: absolute;
+      left: 0;
+      font-size: 0.85rem;
+    }
+
+    /* 角色六宮格 */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .char-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-kawaii);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(255, 101, 132, 0.06);
+    }
+
+    .char-card.kitty { border-top: 4px solid var(--sanrio-pink); }
+    .char-card.melody { border-top: 4px solid #FF85A2; }
+    .char-card.purin { border-top: 4px solid var(--sanrio-yellow); }
+    .char-card.cinna { border-top: 4px solid var(--sanrio-blue); }
+    .char-card.kuromi { border-top: 4px solid var(--sanrio-purple); }
+    .char-card.gude { border-top: 4px solid #F59E0B; }
+
+    .char-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .char-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+
+    /* 領獎台排位 */
+    .podium-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+
+    .podium-col {
+      background: #FFFFFF;
+      border: 2px solid var(--border-kawaii);
+      border-radius: 18px;
+      padding: 1.25rem 0.8rem;
+      box-shadow: 0 6px 16px rgba(255, 101, 132, 0.08);
+    }
+
+    .podium-col.p1 {
+      border-color: var(--sanrio-yellow);
+      background: #FFFDF0;
+      transform: translateY(-8px);
+    }
+
+    .podium-badge {
+      display: inline-block;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .podium-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .podium-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* 底部來源欄 (SSOT) */
+    .slide-footer-source {
+      margin-top: 1.8rem;
+      padding-top: 1rem;
+      border-top: 1.5px dashed var(--border-kawaii);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .source-pill {
+      background: #FFE8EE;
+      color: var(--sanrio-pink);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      border: 1px solid #FFC2D1;
+      font-size: 0.78rem;
+    }
+
+    /* 底部控制列 */
+    .pres-controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 76px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-top: 2px solid var(--border-kawaii);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+
+    .control-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .key-tag {
+      background: #FFF0F4;
+      border: 1px solid var(--border-kawaii);
+      padding: 2px 8px;
+      border-radius: 6px;
+      color: var(--sanrio-pink);
+      font-weight: 700;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-nav {
+      background: #FFF5F7;
+      border: 2px solid var(--border-kawaii);
+      color: var(--sanrio-pink);
+      font-family: var(--font-rounded);
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(255, 101, 132, 0.1);
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: var(--sanrio-pink);
+      color: #FFFFFF;
+      border-color: var(--sanrio-pink);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 101, 132, 0.25);
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #FFE0E8;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid var(--border-kawaii);
+    }
+
+    .dot.active {
+      background: var(--sanrio-pink);
+      transform: scale(1.25);
+      border-color: var(--sanrio-pink);
+    }
+
+    @media (max-width: 768px) {
+      .pres-header { padding: 0 1rem; }
+      .brand-title { font-size: 0.85rem; }
+      .pres-container { padding: 1rem; }
+      .slide { padding: 1.5rem; border-radius: 20px; }
+      .slide-title { font-size: 1.6rem; }
+      .content-grid { grid-template-columns: 1fr; }
+      .podium-box { grid-template-columns: 1fr; }
+      .control-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bubble-bg"></div>
+
+  <!-- 頂部導航 -->
+  <header class="pres-header">
+    <div class="header-brand">
+      <div class="ribbon-badge">🎀</div>
+      <div>
+        <div class="brand-title">SANRIO CHARACTER WIKI // 新手入門講義</div>
+        <span class="brand-subtitle">SMALL GIFT, BIG SMILE 夢幻角色宇宙</span>
+      </div>
+    </div>
+    <div class="slide-counter" id="slideCounter">SLIDE <span>01</span> / 07</div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </header>
+
+  <!-- 簡報主舞台 -->
+  <main class="pres-container">
+
+    <!-- 投影片 01: 封面 -->
+    <article class="slide active" id="slide-1">
+      <div class="category-tag">🌸 WELCOME // SANRIO UNIVERSE</div>
+      <h2 class="slide-title">走進粉彩夢幻國度！<br><span class="highlight">零基礎看懂三麗鷗角色宇宙與人氣哲學</span></h2>
+
+      <div class="content-grid">
+        <div class="handout-card">
+          <div class="card-label">✨ 風靡全球半世紀</div>
+          <h3 class="card-heading">什麼是三麗鷗 (Sanrio)？</h3>
+          <div class="card-body">
+            <p><strong>世界首屈一指的可愛文化生活美學</strong>：</p>
+            <ul>
+              <li>創立於 1960 年，陪伴全球數世代人成長的夢幻角色王國。</li>
+              <li>從實體文具小禮物、主題樂園，到串流動畫與熱門手遊。</li>
+              <li>以獨一無二的「可愛（Kawaii）」療癒當代人的忙碌與心靈。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">🎀 打破新手刻板印象</div>
+          <h3 class="card-heading">不只有 Hello Kitty！</h3>
+          <div class="card-body">
+            <p><strong>百花齊放的多元人氣明星陣容</strong>：</p>
+            <ul>
+              <li><strong>五連霸人氣霸主</strong>：大耳狗（Cinnamoroll）。</li>
+              <li><strong>酷甜反差萌小惡魔</strong>：酷洛米（Kuromi）。</li>
+              <li><strong>現代軟爛躺平始祖</strong>：懶蛋蛋（Gudetama）。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/brand-story.md · wiki/classic-characters.md</span>
+      </div>
+    </article>
+
+    <!-- 投影片 02: 品牌哲學 -->
+    <article class="slide" id="slide-2">
+      <div class="category-tag">🎀 SECTION 01 // BRAND STORY</div>
+      <h2 class="slide-title">從絲綢行到可愛帝國：<br><span class="highlight">Small Gift, Big Smile 的暖心哲學</span></h2>
+
+      <div class="content-grid">
+        <div class="handout-card">
+          <div class="card-label">📜 創立沿革與轉型</div>
+          <h3 class="card-heading">山梨絲綢中心 (1960)</h3>
+          <div class="card-body">
+            <ul>
+              <li><strong>1960 年 8 月 10 日</strong>：原山梨縣公務員辻信太郎創立「山梨絲綢中心株式會社」。</li>
+              <li><strong>1973 年華麗轉身</strong>：轉型卡通角色開發與禮品周邊設計，正式更名為<strong>「株式会社サンリオ (Sanrio)」</strong>。</li>
+              <li><strong>2020 年新世代接班</strong>：31 歲的創辦人之孫辻朋邦接任社長，開啟國際化與數位化新時代。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">💝 核心經營哲學</div>
+          <h3 class="card-heading">Small Gift, Big Smile</h3>
+          <div class="card-body">
+            <p><strong>「一份小禮物，帶來大微笑」</strong>：</p>
+            <ul>
+              <li>三麗鷗的核心不是單純賣商品，而是打造「人際溝通的橋樑」。</li>
+              <li>透過一張卡片、一隻筆或一個可愛小玩偶，傳遞朋友與家人之間的友愛、感謝與關懷。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/brand-story.md</span>
+      </div>
+    </article>
+
+    <!-- 投影片 03: 經典角色圖鑑 -->
+    <article class="slide" id="slide-3">
+      <div class="category-tag">👑 SECTION 02 // CLASSIC CHARACTERS</div>
+      <h2 class="slide-title">三麗鷗六大代表巨星：<br><span class="highlight">個性特色與反差萌魅力</span></h2>
+
+      <div class="char-grid">
+        <div class="char-card kitty">
+          <div class="char-name">凱蒂貓 (Hello Kitty, 1974)</div>
+          <div class="char-desc">倫敦郊區出身，開朗善良。刻意不畫嘴巴，讓粉絲能自由投影喜怒哀樂。</div>
+        </div>
+        <div class="char-card melody">
+          <div class="char-name">美樂蒂 (My Melody, 1975)</div>
+          <div class="char-desc">森林裡的純真小兔，喜愛與媽媽一起烤香噴噴的杏仁磅蛋糕。</div>
+        </div>
+        <div class="char-card purin">
+          <div class="char-name">布丁狗 (Pompompurin, 1996)</div>
+          <div class="char-desc">頭戴深褐貝雷帽的黃金獵犬，性格悠閒，最愛午睡與蒐藏主人的鞋子。</div>
+        </div>
+        <div class="char-card cinna">
+          <div class="char-name">大耳狗 (Cinnamoroll, 2001)</div>
+          <div class="char-desc">用大耳朵在雲端飛翔的肉桂小狗，溫暖軟萌，達成肖像大賞五連霸！</div>
+        </div>
+        <div class="char-card kuromi">
+          <div class="char-name">酷洛米 (Kuromi, 2005)</div>
+          <div class="char-desc">黑頭巾粉紅骷髏的叛逆小惡魔，外表帥氣酷辣，內心超愛寫少女戀愛日記。</div>
+        </div>
+        <div class="char-card gude">
+          <div class="char-name">懶蛋蛋 (Gudetama, 2013)</div>
+          <div class="char-desc">「好累喔～什麼都不想做」，以生無可戀的軟爛姿態引發高壓現代人強烈共鳴。</div>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/classic-characters.md</span>
+      </div>
+    </article>
+
+    <!-- 投影片 04: 設計秘辛 -->
+    <article class="slide" id="slide-4">
+      <div class="category-tag">🎨 SECTION 03 // ORIGIN SECRETS</div>
+      <h2 class="slide-title">靈感原來長這樣！<br><span class="accent-purple">經典角色誕生的身世大反轉</span></h2>
+
+      <div class="content-grid">
+        <div class="handout-card">
+          <div class="card-label">🇬🇧 英倫熱潮與大耳朵小狗</div>
+          <h3 class="card-heading">凱蒂貓與大耳狗的身世</h3>
+          <div class="card-body">
+            <ul>
+              <li><strong>凱蒂貓 (1974)</strong>：設計師清水侑子順應當時日本社會對英倫優雅文化的憧憬，設定其出生於倫敦郊區，身高 5 個蘋果高、體重 3 個蘋果重。</li>
+              <li><strong>大耳狗 (2001)</strong>：設計師奧村心雪初稿原畫原本是一隻垂耳小白兔，後因大耳朵飛翔姿態與捲捲尾巴，靈光一閃改為「雲端小狗」。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">🍳 反派逆襲與加班頓悟</div>
+          <h3 class="card-heading">酷洛米與懶蛋蛋的傳奇</h3>
+          <div class="card-body">
+            <ul>
+              <li><strong>酷洛米 (2005)</strong>：原本只是電視動畫《奇幻魔法 Melody》製造衝突的女二反派，憑藉立體反差萌逆襲成為全球人氣前三強！</li>
+              <li><strong>懶蛋蛋 (2013)</strong>：設計師 Amy 深夜加班筋疲力盡回家後，在廚房打蛋時看著無精打采滑入碗中的蛋黃獲得靈感，在食物角色總選舉脫穎而出。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/origin-stories.md</span>
+      </div>
+    </article>
+
+    <!-- 投影片 05: 肖像大賞 -->
+    <article class="slide" id="slide-5">
+      <div class="category-tag">🏆 SECTION 04 // RANKING BATTLE</div>
+      <h2 class="slide-title">每年數千萬票的熱血對決！<br><span class="highlight">三麗鷗肖像大賞與現代三巨頭</span></h2>
+
+      <div class="podium-box">
+        <div class="podium-col p2">
+          <div class="podium-badge">🥈</div>
+          <div class="podium-name">布丁狗</div>
+          <div class="podium-desc">No.2 Pompompurin<br>長年穩坐亞軍治癒寶座</div>
+        </div>
+        <div class="podium-col p1">
+          <div class="podium-badge">👑</div>
+          <div class="podium-name">大耳狗</div>
+          <div class="podium-desc">No.1 Cinnamoroll<br>震撼達成「五連霸」霸業！</div>
+        </div>
+        <div class="podium-col p3">
+          <div class="podium-badge">🥉</div>
+          <div class="podium-name">酷洛米</div>
+          <div class="podium-desc">No.3 Kuromi<br>酷甜風潮席捲 Z 世代</div>
+        </div>
+      </div>
+
+      <div class="handout-card" style="margin-top:1rem;">
+        <div class="card-label">🌟 TOP 4 – 10 明星群英榜</div>
+        <div class="card-body">
+          <p>除了殿堂級前三名外，人氣榜單還匯聚了眾多跨時代巨星：<strong>帕恰狗、凱蒂貓、美樂蒂、人魚漢頓、雙星仙子、山姆企鵝、大眼蛙</strong>。</p>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/popularity-ranking.md</span>
+      </div>
+    </article>
+
+    <!-- 投影片 06: 娛樂宇宙 -->
+    <article class="slide" id="slide-6">
+      <div class="category-tag">🏰 SECTION 05 // MULTIMEDIA UNIVERSE</div>
+      <h2 class="slide-title">從彩虹樂園到熱門動畫：<br><span class="highlight">三麗鷗半世紀跨界娛樂版圖</span></h2>
+
+      <div class="content-grid">
+        <div class="handout-card">
+          <div class="card-label">🎡 夢幻實體朝聖地</div>
+          <h3 class="card-heading">三麗鷗彩虹樂園 (1990)</h3>
+          <div class="card-body">
+            <ul>
+              <li>1990 年於東京多摩市落成，全球首座全室內主題樂園。</li>
+              <li>不受天候影響，近距離與明星擁抱並欣賞夢幻花車遊行。</li>
+              <li>官方完整收錄 1974 至 2017 年超過 30 位跨世代代表角色。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">📺 破圈出海的影視遊戲</div>
+          <h3 class="card-heading">經典跨界代表作</h3>
+          <div class="card-body">
+            <ul>
+              <li><strong>2005《奇幻魔法 Melody》</strong>：締造酷洛米反派逆襲神話。</li>
+              <li><strong>2009《寶石寵物》</strong>：掀起魔法寵物熱潮。</li>
+              <li><strong>2018《衝吧烈子》</strong>：重金屬卡拉 OK 吼出打工人辛酸，登陸 Netflix 爆紅全球。</li>
+              <li><strong>2023《Hello Kitty Island Adventure》</strong>：熱門島嶼探險手遊。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/timeline-and-works.md</span>
+      </div>
+    </article>
+
+    <!-- 投影片 07: 新手入坑錦囊 -->
+    <article class="slide" id="slide-7">
+      <div class="category-tag">🎁 SECTION 06 // STARTER GUIDE</div>
+      <h2 class="slide-title">現在你已經懂了！<br><span class="highlight">如何挑選你的三麗鷗「本命角色」？</span></h2>
+
+      <div class="content-grid">
+        <div class="handout-card">
+          <div class="card-label">🧸 軟萌治癒系</div>
+          <h3 class="card-heading">大耳狗 & 布丁狗</h3>
+          <div class="card-body">
+            <p>適合需要溫暖撫慰、熱愛悠閒午睡與柔軟毛茸茸小動物的你。</p>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">🖤 酷甜反差系</div>
+          <h3 class="card-heading">酷洛米</h3>
+          <div class="card-body">
+            <p>適合外表有個性帥氣、內心深藏少女浪漫心思，勇敢做自己的你。</p>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">🎀 經典溫柔系</div>
+          <h3 class="card-heading">凱蒂貓 & 美樂蒂</h3>
+          <div class="card-body">
+            <p>適合喜歡精緻典雅、手作烘焙與常常向身邊好友傳遞感謝的你。</p>
+          </div>
+        </div>
+
+        <div class="handout-card">
+          <div class="card-label">🍳 厭世解壓系</div>
+          <h3 class="card-heading">懶蛋蛋 & 衝吧烈子</h3>
+          <div class="card-body">
+            <p>適合每天被工作課業壓得喘不過氣，想大喊「好累喔」或用搖滾嘶吼宣洩壓力的你。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-source">
+        <span class="source-pill">WIKI SOURCE</span>
+        <span>wiki/classic-characters.md · wiki/timeline-and-works.md</span>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- 底部控制列 -->
+  <footer class="pres-controls">
+    <div class="control-hint">
+      <span>導航提示：使用鍵盤</span>
+      <span class="key-tag">←</span>
+      <span class="key-tag">→</span>
+      <span>或空白鍵切換投影片</span>
+    </div>
+
+    <div class="nav-dots" id="navDots">
+      <div class="dot active" data-slide="1"></div>
+      <div class="dot" data-slide="2"></div>
+      <div class="dot" data-slide="3"></div>
+      <div class="dot" data-slide="4"></div>
+      <div class="dot" data-slide="5"></div>
+      <div class="dot" data-slide="6"></div>
+      <div class="dot" data-slide="7"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-nav" id="btnPrev" disabled>← 上一頁</button>
+      <button class="btn-nav" id="btnNext">下一頁 →</button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 7;
+
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const slideCounter = document.getElementById('slideCounter');
+    const progressBar = document.getElementById('progressBar');
+
+    function updatePresentation(slideNumber) {
+      if (slideNumber < 1 || slideNumber > totalSlides) return;
+      currentSlide = slideNumber;
+
+      // 切換投影片顯示
+      slides.forEach((slide, idx) => {
+        if (idx + 1 === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // 更新進度點
+      dots.forEach((dot, idx) => {
+        if (idx + 1 === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      // 更新頁碼計數
+      const formattedNum = currentSlide.toString().padStart(2, '0');
+      slideCounter.innerHTML = `SLIDE <span>${formattedNum}</span> / 07`;
+
+      // 更新進度條
+      const progressPercent = (currentSlide / totalSlides) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      // 更新按鈕
+      btnPrev.disabled = currentSlide === 1;
+      btnNext.disabled = currentSlide === totalSlides;
+      if (currentSlide === totalSlides) {
+        btnNext.textContent = '完成講義 🎀';
+      } else {
+        btnNext.textContent = '下一頁 →';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (currentSlide > 1) updatePresentation(currentSlide - 1);
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (currentSlide < totalSlides) {
+        updatePresentation(currentSlide + 1);
+      } else {
+        updatePresentation(1);
+      }
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const target = parseInt(dot.dataset.slide, 10);
+        updatePresentation(target);
+      });
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        if (currentSlide < totalSlides) {
+          updatePresentation(currentSlide + 1);
+        } else {
+          updatePresentation(1);
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        if (currentSlide > 1) {
+          updatePresentation(currentSlide - 1);
+        }
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        updatePresentation(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        updatePresentation(totalSlides);
+      }
+    });
+
+    updatePresentation(1);
+  </script>
+</body>
+</html>
